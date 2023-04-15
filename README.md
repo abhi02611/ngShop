@@ -3,7 +3,7 @@ Mean Stack Ecommerce Project
 
 This project conatins two parts Backend and frontend.
 
-Pre requisite: 
+Pre requisite installation: 
 
  nodejs -> https://nodejs.org/en/download
  angulae -> npm install -g @angular/cli
@@ -20,7 +20,7 @@ Pre requisite:
 3. run command: npm start.
  
  
-# frontend: 
+# Frontend: 
 
 The frontend is build on angular with the help of Nx monorepo
 
