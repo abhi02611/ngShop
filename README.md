@@ -5,8 +5,8 @@ This project conatins two parts Backend and frontend.
 
 Pre requisite installation: 
 
- nodejs -> https://nodejs.org/en/download
- angulae -> npm install -g @angular/cli
+ nodejs -> https://nodejs.org/en/download <br>
+ angular -> npm install -g @angular/cli <br>
  nx -> npm install -g nx@latest
 
 # Backend: 
