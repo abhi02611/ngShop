@@ -10,7 +10,7 @@ This project conatins two parts Backend and frontend.
  For running: npm start
  
  
-#frontend: 
+# frontend: 
 
 The frontend is build on angular with the help of Nx monorepo
 
