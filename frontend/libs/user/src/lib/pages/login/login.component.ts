@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { LocalstorageService } from '../../services/localstorage.service';
+import * as UsersActions from '../../state/users.actions';
 
 @Component({
   selector: 'user-login',
@@ -43,9 +44,10 @@ export class LoginComponent implements OnInit{
     this.auth
       .login(this.loginForm.email.value, this.loginForm.password.value)
       .subscribe(
-        (user) => {
+        (user: any) => {
           this.authError = false;
           this.localstorageService.setToken(user.token);
+          UsersActions.buildUserSessionSuccess({ user: user.user });
           this.router.navigate(['/']);
         },
         (error: HttpErrorResponse) => {
