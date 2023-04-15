@@ -18,5 +18,5 @@ The frontend is build on angular with the help of Nx monorepo
 
 For running go to frontend directory and run:
  
- nx serve admin -> for running admin
+ nx serve admin -> for running admin <br>
  nx serve ng-shop -> for running ngShop
