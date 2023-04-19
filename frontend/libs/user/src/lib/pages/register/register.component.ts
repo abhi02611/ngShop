@@ -6,6 +6,7 @@ import { timer } from 'rxjs';
 import { User } from '../../models/user';
 import { UsersService } from '../../services/users.service';
 import { Location } from '@angular/common';
+import { PasswordValidator } from '../../services/password-validator.service';
 
 @Component({
   selector: 'user-register',
@@ -34,18 +35,49 @@ export class RegisterComponent {
   }
 
   private _initUserForm() {
-    this.form = this.formBuilder.group({
-      name: ['', Validators.required],
-      password: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      phone: ['', Validators.required],
-      isAdmin: [false],
-      street: [''],
-      apartment: [''],
-      zip: [''],
-      city: [''],
-      country: [''],
-    });
+    this.form = this.formBuilder.group(
+      {
+        name: ['', [Validators.required, Validators.pattern('^[A-Za-z]+$')]],
+        password: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(8),
+            PasswordValidator.patternValidator(new RegExp('(?=.*[0-9])'), {
+              requiresDigit: true,
+            }),
+            PasswordValidator.patternValidator(new RegExp('(?=.*[A-Z])'), {
+              requiresUppercase: true,
+            }),
+            PasswordValidator.patternValidator(new RegExp('(?=.*[a-z])'), {
+              requiresLowercase: true,
+            }),
+            PasswordValidator.patternValidator(new RegExp('(?=.*[$@^!%*?&])'), {
+              requiresSpecialChars: true,
+            }),
+          ],
+        ],
+        confirmPassword: ['', [Validators.required, Validators.minLength(8)]],
+        email: ['', [Validators.required, Validators.email]],
+        phone: [
+          '',
+          [
+            Validators.required,
+            Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$'),
+          ],
+        ],
+        isAdmin: [false],
+        street: ['', [Validators.required, Validators.pattern('^[A-Za-z]+$')]],
+        apartment: ['', Validators.required],
+        apartment2: [''],
+        zip: ['', [Validators.required, Validators.pattern('^((\\+91-?)|0)?[0-9]{6}$')]],
+        city: ['', [Validators.required, Validators.pattern('^[A-Za-z]+$')]],
+        country: ['', Validators.required],
+      },
+      {
+        validators: PasswordValidator.MatchValidator,
+      }
+    );
   }
 
   private _getCountries() {
@@ -78,6 +110,8 @@ export class RegisterComponent {
 
 
   onSubmit() {
+    console.log(this.userForm);
+
     this.isSubmitted = true;
     if (this.form.invalid) {
       return;

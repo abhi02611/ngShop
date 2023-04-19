@@ -19,53 +19,90 @@
         <form [formGroup]="form">
           <div class="p-fluid p-formgrid p-grid">
             <div class="p-field p-col-4">
-              <label for="name">Name</label>
+              <label class="form-required-label" for="name">Name</label>
               <input formControlName="name" id="name" type="text" pInputText />
-              <small *ngIf="userForm.name.invalid && isSubmitted" class="p-error">Name is required</small>
+              <small *ngIf="userForm.name.getError('required') && isSubmitted" class="p-error">Name is required</small>
+              <small *ngIf="userForm.name.getError('pattern') && isSubmitted" class="p-error">Name should not have numeric value</small>
             </div>
             <div class="p-field p-col-4">
-              <label for="email">Email</label>
+              <label class="form-required-label" for="email">Email</label>
               <input formControlName="email" id="email" type="text" pInputText />
-              <small *ngIf="userForm.email.invalid && isSubmitted" class="p-error"><span
-                  *ngIf="userForm.email.errors.required">email is required</span>
+              <small *ngIf="userForm.email.invalid && isSubmitted" class="p-error">
+                <span *ngIf="userForm.email.errors.required">email is required</span>
                 <span *ngIf="userForm.email.errors.email">email is invalid</span></small>
             </div>
-            <div class="p-field p-col-4">
-              <label for="password">Password</label>
-              <input formControlName="password" id="password" type="password" pInputText />
-              <small *ngIf="userForm.password.invalid && isSubmitted" class="p-error">Password is required</small>
-            </div>
-            <div class="p-field p-col-4">
-              <label for="color">Phone</label><br />
-              <p-inputMask mask="(999) 999-9999" formControlName="phone" placeholder="(999) 999-9999"></p-inputMask>
-              <small *ngIf="userForm.phone.invalid && isSubmitted" class="p-error">phone is required</small>
-            </div>
-            <div class="p-field p-col-4">
+              <div class="p-field p-col-4">
+                <label class="form-required-label" for="Phone">Phone</label><br />
+                <input type="text" formControlName="phone" id="Phone" pInputText>
+                <small *ngIf="userForm.phone.getError('required') && isSubmitted" class="p-error">Please enter mobile number</small>
+                <small *ngIf="userForm.phone.getError('pattern') && isSubmitted" class="p-error">Mobile number is not 10
+                  digit</small>
+              </div>
+            <!-- <div class="p-field p-col-4">
               <label for="isAdmin">Is Admin</label><br />
               <p-inputSwitch formControlName="isAdmin"></p-inputSwitch>
-            </div>
+            </div> -->
           </div>
           <div class="p-fluid p-formgrid p-grid">
             <div class="p-field p-col-4">
-              <label for="street">Street</label>
-              <input formControlName="street" id="street" type="text" pInputText />
-            </div>
-            <div class="p-field p-col-4">
-              <label for="street">Apartment</label>
+              <label for="apartment" class="form-required-label">Address</label>
               <input formControlName="apartment" id="apartment" type="text" pInputText />
+              <small *ngIf="userForm.apartment.getError('required') && isSubmitted" class="p-error">Address id required</small>
             </div>
             <div class="p-field p-col-4">
-              <label for="street">Zip Code</label>
-              <input formControlName="zip" id="zip" type="text" pInputText />
+              <label for="apartment2">Address2</label>
+              <input formControlName="apartment2" id="apartment2" type="text" pInputText />
             </div>
             <div class="p-field p-col-4">
-              <label for="city">City</label>
+              <label for="city" class="form-required-label">City</label>
               <input formControlName="city" id="city" type="text" pInputText />
+              <small *ngIf="userForm.city.getError('required') && isSubmitted" class="p-error">City is required</small>
+              <small *ngIf="userForm.city.getError('pattern') && isSubmitted" class="p-error">City should not have numeric
+                value</small>
             </div>
             <div class="p-field p-col-4">
-              <label for="country">Country</label><br />
-              <p-dropdown [options]="countries" formControlName="country" optionLabel="name" optionValue="id"
-                [filter]="true" filterBy="name" [showClear]="true" placeholder="Select a Country"></p-dropdown>
+              <label for="street" class="form-required-label">State</label>
+              <input formControlName="street" id="street" type="text" pInputText />
+              <small *ngIf="userForm.street.getError('required') && isSubmitted" class="p-error">State is required</small>
+              <small *ngIf="userForm.street.getError('pattern') && isSubmitted" class="p-error">State should not have numeric
+                value</small>
+            </div>
+            <div class="p-field p-col-4">
+              <label class="form-required-label" for="country">Country</label><br />
+              <p-dropdown [options]="countries" formControlName="country" optionLabel="name" optionValue="id" [filter]="true"
+                filterBy="name" [showClear]="true" placeholder="Select a Country"></p-dropdown>
+              <small *ngIf="userForm.country.getError('required') && isSubmitted" class="p-error">please select your country</small>
+            </div>
+            <div class="p-field p-col-4">
+              <label for="zip" class="form-required-label">Pin Code</label>
+              <input formControlName="zip" id="zip" type="text" pInputText />
+              <small *ngIf="userForm.zip.getError('required') && isSubmitted" class="p-error">Pin Code is required</small>
+              <small *ngIf="userForm.zip.getError('pattern') && isSubmitted" class="p-error">Pin Code should be in 6 digit</small>
+            </div>
+            <div class="p-field p-col-4">
+              <label class="form-required-label" for="password">Password</label>
+              <input formControlName="password" id="password" type="password" pInputText />
+              <div><small *ngIf="userForm.password.getError('required') && isSubmitted" class="p-error">Password is required</small></div>
+              <div><small *ngIf="userForm.password.getError('minlength') && isSubmitted" class="p-error">Must be at least 8 characters
+                long</small></div>
+              <div><small *ngIf="userForm.password.getError('requiresDigit') && isSubmitted" class="p-error">Must contain at least 1
+                digit</small></div>
+              <div><small *ngIf="userForm.password.getError('requiresSpecialChars') && isSubmitted" class="p-error">Must contain at least 1
+                special character</small></div>
+              <div><small *ngIf="userForm.password.getError('requiresUppercase') && isSubmitted" class="p-error">Must contain at least 1
+                uppercase character</small></div>
+              <div><small *ngIf="userForm.password.getError('requiresLowercase') && isSubmitted" class="p-error">Must contain at least 1
+                lowercase character</small></div>
+            </div>
+            <div class="p-field p-col-4">
+              <label class="form-required-label" for="confirmPassword">Confirm Password</label>
+              <input formControlName="confirmPassword" id="confirmPassword" type="password" pInputText />
+              <div><small *ngIf="userForm.confirmPassword.getError('required') && isSubmitted" class="p-error">Password is required</small>
+              </div>
+              <div><small *ngIf="userForm.confirmPassword.getError('minlength') && isSubmitted" class="p-error">Must be at least 8 characters
+                  long</small></div>
+              <div><small *ngIf="userForm.confirmPassword.getError('mismatch') && isSubmitted" class="p-error">Confirm Password is not
+                same as Password</small></div>
             </div>
           </div>
         </form>

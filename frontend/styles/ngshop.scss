@@ -34,3 +34,7 @@
   background-color: var(--surface-100);
 }
 
+.form-required-label::after {
+   content: "*";
+   color: red;
+}
