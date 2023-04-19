@@ -21,4 +21,11 @@ header {
       margin-right: 10px;
     }
   }
+
+  p {
+    color: var(--surface-500);
+    cursor: pointer;
+    margin: 0;
+    margin-right: 12px;
+  }
 }

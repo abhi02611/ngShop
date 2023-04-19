@@ -19,6 +19,9 @@ import { UserModule, JwtInterceptor } from '@frontend/user';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { MessageService } from 'primeng/api';
+import { MenuModule } from 'primeng/menu';
+import { ButtonModule } from 'primeng/button';
+import { AvatarModule } from 'primeng/avatar';
 
 @NgModule({
   declarations: [
@@ -42,6 +45,9 @@ import { MessageService } from 'primeng/api';
     OrdersModule,
     UiModule,
     UserModule,
+    MenuModule,
+    ButtonModule,
+    AvatarModule,
   ],
   providers: [
     MessageService,

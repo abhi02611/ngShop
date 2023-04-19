@@ -5,14 +5,16 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { LocalstorageService } from '../../services/localstorage.service';
 import * as UsersActions from '../../state/users.actions';
+import { timer } from 'rxjs';
+import { Location } from '@angular/common';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'user-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent implements OnInit{
-
+export class LoginComponent implements OnInit {
   loginFormGroup: FormGroup;
   isSubmitted = false;
   authError = false;
@@ -22,6 +24,7 @@ export class LoginComponent implements OnInit{
     private formBuilder: FormBuilder,
     private auth: AuthService,
     private localstorageService: LocalstorageService,
+    private messageService: MessageService,
     private router: Router
   ) {}
 
@@ -48,7 +51,16 @@ export class LoginComponent implements OnInit{
           this.authError = false;
           this.localstorageService.setToken(user.token);
           UsersActions.buildUserSessionSuccess({ user: user.user });
-          this.router.navigate(['/']);
+           this.messageService.add({
+             severity: 'success',
+             summary: 'Success',
+             detail: `User loggedIn successfully`,
+           });
+          timer(4000)
+            .toPromise()
+            .then(() => {
+              this.router.navigate(['/']);
+            });
         },
         (error: HttpErrorResponse) => {
           this.authError = true;

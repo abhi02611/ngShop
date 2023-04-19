@@ -5,12 +5,28 @@
         <img src="assets/images/logo.png" alt="logo" />
       </div>
     </div>
-    <div class="p-col-4 search"><products-search></products-search></div>
-    <div class="p-col-3 p-offset-1 navigation">
+    <div class="p-col-3 search"><products-search></products-search></div>
+    <div class="p-col-4 navigation">
       <ngShop-nav></ngShop-nav>
     </div>
-    <div class="p-col-1 tools">
-      <i class="pi pi-user p-text-secondary" style="font-size: 1.5rem"></i>
+    <div class="p-col-2 tools" style='display: flex; justify-content: flex-end;'>
+      <div *ngIf="userloggedIn" style="margin-right: 12px; cursor: pointer;">
+        <p-menu #new [model]="items" [popup]="true" ></p-menu>
+        <p-avatar label="{{userNameInitials}}"
+           shape="circle"
+           [style]="{padding: '20px'}"
+           (click)="new.toggle($event)"
+          >
+        </p-avatar>
+      </div>
+      <div *ngIf="!userloggedIn">
+        <p-menu #menu [model]="logInItems" [popup]="true"></p-menu>
+        <a (click)="menu.toggle($event)" style="cursor: pointer;">
+          <i *ngIf="!userloggedIn" class="pi pi-user p-text-secondary" style="font-size: 1.5rem"></i>
+        </a>
+      </div>
+
+
       <orders-cart-icon></orders-cart-icon>
     </div>
   </div>

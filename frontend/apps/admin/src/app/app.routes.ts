@@ -11,13 +11,14 @@ import { UserListComponent } from './pages/user/user-list/user-list.component';
 import { UserFormComponent } from './pages/user/user-form/user-form.component';
 import { OrdersListComponent } from './pages/orders/orders-list/orders-list.component';
 import { OrdersDetailComponent } from './pages/orders/orders-detail/orders-detail.component';
+import { AdminAuthGuard } from '../../../../libs/user/src/lib/services/admin-auth-guard.service';
 
 
 export const appRoutes: Route[] = [
   {
     path: '',
     component: ShellComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AdminAuthGuard],
     children: [
       {
         path: '',
