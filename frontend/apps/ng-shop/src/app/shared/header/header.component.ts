@@ -42,6 +42,24 @@ export class HeaderComponent implements OnInit {
       },
     ];
 
+    this.authService.user$.subscribe(user => {
+        if(user) {
+           this.userloggedIn = true;
+           this.loggedUserName = user.name;
+                       this.loggedUserName = user.name;
+                       const userArra = this.loggedUserName.split(' ');
+
+                       if (userArra.length == 1) {
+                         this.userNameInitials = userArra[0].substring(0, 1);
+                       }
+                       if (userArra.length == 2) {
+                         this.userNameInitials =
+                           userArra[0].substring(0, 1) +
+                           userArra[1].substring(0, 1);
+                       }
+        }
+    })
+
     const token = this.localStorageToken.getToken();
 
     if (token) {
@@ -79,6 +97,7 @@ export class HeaderComponent implements OnInit {
     this.userloggedIn = false;
     this.loggedUserName = '';
     this.userNameInitials = '';
+    this.route.navigate(['/']);
   }
 
   login() {

@@ -5,9 +5,9 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { LocalstorageService } from '../../services/localstorage.service';
 import * as UsersActions from '../../state/users.actions';
-import { timer } from 'rxjs';
-import { Location } from '@angular/common';
+import { timer, BehaviorSubject } from 'rxjs';
 import { MessageService } from 'primeng/api';
+import { User } from '@frontend/user';
 
 @Component({
   selector: 'user-login',
@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit {
   isSubmitted = false;
   authError = false;
   authMessage = 'Email or Password are wrong';
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -50,13 +51,14 @@ export class LoginComponent implements OnInit {
         (user: any) => {
           this.authError = false;
           this.localstorageService.setToken(user.token);
+          this.auth.updateUserStatus(user.user);
           UsersActions.buildUserSessionSuccess({ user: user.user });
            this.messageService.add({
              severity: 'success',
              summary: 'Success',
              detail: `User loggedIn successfully`,
            });
-          timer(4000)
+          timer(2000)
             .toPromise()
             .then(() => {
               this.router.navigate(['/']);
